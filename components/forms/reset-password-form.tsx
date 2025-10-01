@@ -14,51 +14,54 @@ import { Label } from "@/components/ui/label";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { signUpUser } from "@/server/user";
+import { signInUser } from "@/server/user";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { authClient } from "@/lib/auth-client";
 
 const formSchema = z.object({
-  email: z.email(),
   password: z.string().min(8),
   confirmPassword: z.string().min(8),
-  name: z.string().min(2),
 });
 
-export function SignUpForm({
+export function ResetPasswordForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const [loading, setIsLoading] = useState(false);
   const router = useRouter();
 
+  const params = useSearchParams();
+  const token = params.get("token");
+
   const { register, handleSubmit } = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
       password: "",
       confirmPassword: "",
-      name: "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setIsLoading(true);
-      const response = await signUpUser(
-        values.email,
-        values.password,
-        values.confirmPassword,
-        values.name
-      );
-      if (response.success) {
-        toast.success(response.message);
-        router.replace("/dashboard");
+      if (values.password !== values.confirmPassword) {
+        toast.error("Passwords don't match");
+        return;
+      }
+      const { error } = await authClient.resetPassword({
+        newPassword: values.password,
+        token: token ?? "",
+      });
+      if (!error) {
+        toast.success("Password reset successfully");
+        router.push("/login");
+      } else {
+        toast.error(error.message);
       }
     } catch (error) {
-      const e = error as Error;
-      toast.error(e.message);
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -67,54 +70,29 @@ export function SignUpForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle>Create your account</CardTitle>
+          <CardTitle>Login to your account</CardTitle>
           <CardDescription>
-            Enter your details below to create your account
+            Enter your email below to login to your account
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-3">
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="email">Email</Label>
                 <Input
-                  {...register("name", {
+                  {...register("password", {
                     required: true,
                   })}
-                  id="name"
-                  type="text"
-                  placeholder="John"
+                  id="password"
+                  type="password"
+                  placeholder="******"
                   autoFocus
                   disabled={loading}
                 />
               </div>
               <div className="grid gap-3">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  {...register("email", {
-                    required: true,
-                  })}
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
-                  disabled={loading}
-                />
-              </div>
-              <div className="grid gap-3">
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  {...register("password", {
-                    required: true,
-                    minLength: 8,
-                  })}
-                  id="password"
-                  type="password"
-                  placeholder="********"
-                  disabled={loading}
-                />
-              </div>
-              <div className="grid gap-3">
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
+                <Label htmlFor="password">Confirm Password</Label>
                 <Input
                   {...register("confirmPassword", {
                     required: true,
@@ -122,23 +100,20 @@ export function SignUpForm({
                   })}
                   id="confirmPassword"
                   type="password"
-                  placeholder="********"
+                  placeholder="******"
                   disabled={loading}
                 />
               </div>
               <div className="flex flex-col gap-3">
                 <Button type="submit" className="w-full" disabled={loading}>
-                  Sign up
-                </Button>
-                <Button variant="outline" className="w-full">
-                  Login with Google
+                  Reset Password
                 </Button>
               </div>
             </div>
             <div className="mt-4 text-center text-sm">
-              Already have an account?{" "}
-              <a href="/login" className="underline underline-offset-4">
-                Log in
+              Don&apos;t have an account?{" "}
+              <a href="/signup" className="underline underline-offset-4">
+                Sign up
               </a>
             </div>
           </form>

@@ -18,8 +18,7 @@ const Page = () => {
       <Button
         onClick={handleSignOut}
         variant={"outline"}
-        className="
-      cursor-pointer"
+        className="cursor-pointer"
       >
         Sign Out
       </Button>
