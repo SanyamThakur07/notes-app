@@ -18,6 +18,7 @@ import { signUpUser } from "@/server/user";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { authClient } from "@/lib/auth-client";
 
 const formSchema = z.object({
   email: z.email(),
@@ -42,6 +43,13 @@ export function SignUpForm({
       name: "",
     },
   });
+
+  const signIn = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/dashboard",
+    });
+  };
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -129,7 +137,12 @@ export function SignUpForm({
                 <Button type="submit" className="w-full" disabled={loading}>
                   Sign up
                 </Button>
-                <Button variant="outline" className="w-full">
+                <Button
+                  onClick={signIn}
+                  type="button"
+                  variant="outline"
+                  className="w-full"
+                >
                   Sign up with Google
                 </Button>
               </div>
