@@ -1,3 +1,5 @@
+"use server"
+
 import { db } from "@/db/db";
 import { InsertNote, notes } from "@/db/schema";
 import { eq } from "drizzle-orm";

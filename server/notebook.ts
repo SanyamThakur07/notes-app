@@ -1,3 +1,5 @@
+"use server"
+
 import { db } from "@/db/db";
 import { InsertNotebook, notebooks } from "@/db/schema";
 import { auth } from "@/lib/auth";
@@ -33,7 +35,7 @@ export const getNotebooks = async () => {
                 notes: true,
             }
         })
-        return { success: true, getNotebooksByUser };
+        return { success: true, notebooks: getNotebooksByUser };
     }
     catch {
         return { success: false, message: "Failed to get notebooks" };

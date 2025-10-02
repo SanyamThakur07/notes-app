@@ -55,7 +55,7 @@ const PageWrapper = ({ children, breadcrumbs }: PageWrapperProps) => {
           </Button>
         </div>
       </div>
-      <div>{children}</div>
+      <div className="p-4">{children}</div>
     </div>
   );
 };
