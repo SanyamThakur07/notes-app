@@ -31,7 +31,7 @@ const PageWrapper = ({ children, breadcrumbs }: PageWrapperProps) => {
   return (
     <div>
       <div className="flex items-center justify-between border-b">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 px-3">
           <SidebarTrigger />
           <Breadcrumb>
             <BreadcrumbList>

@@ -1,4 +1,5 @@
-import { pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
+import { pgTable, text, timestamp, boolean, jsonb } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
     id: text("id").primaryKey(),
@@ -60,4 +61,36 @@ export const verification = pgTable("verification", {
         .notNull(),
 });
 
-export const schema = { user, session, account, verification };
+export const notebooks = pgTable("notebooks", {
+    id: text("id").primaryKey(),
+    name: text("name").notNull(),
+    userId: text("user_id").notNull().references(() => user.id, { onDelete: 'cascade' }),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt"),
+})
+
+export const notes = pgTable("notes", ({
+    id: text("id").primaryKey(),
+    title: text("title").notNull(),
+    content: jsonb("content").notNull(),
+    notebookId: text("notebook_id").notNull().references(() => notebooks.id, { onDelete: 'cascade' }),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt"),
+}))
+
+export const notebookRelations = relations(notebooks, ({ many, one }) => ({
+    notes: many(notes),
+    user: one(user, {
+        fields: [notebooks.userId],
+        references: [user.id],
+    })
+}))
+
+export const noteRelations = relations(notes, ({ one }) => ({
+    notebook: one(notebooks, {
+        fields: [notes.notebookId],
+        references: [notebooks.id],
+    })
+}))
+
+export const schema = { user, session, account, verification, notebooks, notes, notebookRelations, noteRelations };
