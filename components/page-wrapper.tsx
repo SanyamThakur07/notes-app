@@ -22,7 +22,7 @@ interface PageWrapperProps {
   }[];
 }
 
-const PageWrapper = ({ children, breadcrumbs }: PageWrapperProps) => {
+const PageWrapper = ({ breadcrumbs, children }: PageWrapperProps) => {
   const router = useRouter();
   const handleSignOut = async () => {
     await authClient.signOut();

@@ -69,9 +69,9 @@ export const notebooks = pgTable("notebooks", {
     updatedAt: timestamp("updatedAt"),
 })
 
-export type notebook = typeof notebooks.$inferSelect;
+export type Notebook = typeof notebooks.$inferSelect;
 export type InsertNotebook = typeof notebooks.$inferInsert & {
-    notes: note[];
+    notes: Note[];
 };
 
 export const notes = pgTable("notes", ({
@@ -83,7 +83,7 @@ export const notes = pgTable("notes", ({
     updatedAt: timestamp("updatedAt"),
 }))
 
-export type note = typeof notes.$inferSelect;
+export type Note = typeof notes.$inferSelect;
 export type InsertNote = typeof notes.$inferInsert;
 
 export const notebookRelations = relations(notebooks, ({ many, one }) => ({
