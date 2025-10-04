@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ChevronRight } from "lucide-react";
+import { Suspense } from "react";
 
 import { SearchForm } from "@/components/search-form";
 
@@ -38,10 +39,14 @@ export async function AppSidebar({
           <Image src="/noteforge-logo.png" alt="Logo" width={32} height={32} />
           <h2>NoteForge</h2>
         </Link>
-        <SearchForm />
+        <Suspense fallback={<div>Loading...</div>}>
+          <SearchForm />
+        </Suspense>
       </SidebarHeader>
       <SidebarContent className="gap-0">
-      <SidebarData data={data} />  
+        <Suspense fallback={<div>Loading...</div>}>
+          <SidebarData data={data} />  
+        </Suspense>
       </SidebarContent>
       <SidebarRail />
     </Sidebar>
