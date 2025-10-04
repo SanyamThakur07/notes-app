@@ -1,96 +1,121 @@
-# NoteFlow 🔥
+# 🔥 NoteForge - Smart Notes & Code Snippets App
 
-A modern, developer-focused note-taking application built with Next.js. NoteFlow is designed to help developers capture, organize, and link their notes, code snippets, and technical insights with a lightning-fast, keyboard-first UX.
+A modern, full-stack notes application built with Next.js 15, featuring rich text editing, notebook organization, and seamless user authentication. Perfect for developers, students, and professionals who need to capture, organize, and link technical insights.
 
 ## ✨ Features
 
-### 🚀 Core Features
-- **Lightning-Fast Input**: Capture ideas instantly with keyboard-first UX
-- **Developer-Friendly**: Built specifically for developers' workflow
-- **Customizable Interface**: Fully customizable to fit your preferences
-- **Smart Organization**: Organize notes, code snippets, and technical insights
-- **Responsive Design**: Works seamlessly across all devices
-- **Dark/Light Mode**: Built-in theme switching capability
+### 🎯 Core Features
+- **Rich Text Editor**: Powered by TipTap with full formatting capabilities
+- **Notebook Organization**: Create and manage multiple notebooks
+- **Real-time Auto-save**: Content automatically saves as you type
+- **Manual Save**: Explicit save functionality with visual feedback
+- **User Authentication**: Secure login/signup with email verification
+- **Password Reset**: Email-based password recovery
+- **Responsive Design**: Works seamlessly on desktop and mobile
+- **Dark/Light Mode**: Theme switching with system preference detection
 
-### 🔧 Developer-Centric Features
-- **Markdown Support**: Full markdown support for rich text formatting
-- **Code Block Integration**: Syntax highlighting for code snippets
-- **CLI-Style Shortcuts**: Command-line inspired keyboard shortcuts
-- **Git-Style Versioning**: Version control for your notes (planned)
-- **Local-First Architecture**: Your data stays on your device
-- **End-to-End Encryption**: Optional encryption for sensitive notes (planned)
+### 📝 Rich Text Editing
+- **Formatting**: Bold, italic, strikethrough, code, underline
+- **Headings**: H1, H2, H3 with dropdown selection
+- **Lists**: Bullet and ordered lists
+- **Alignment**: Left, center, right, justify
+- **Undo/Redo**: Full history support
+- **Auto-save**: Content saves automatically on changes
+- **Manual Save**: Plus button for explicit saving
 
-### 🎨 UI/UX Features
-- **Modern Design**: Clean, minimalist interface with beautiful animations
-- **Smooth Animations**: Powered by Framer Motion for fluid interactions
-- **Text Effects**: Advanced text animations and effects
-- **Component Library**: Custom UI components built with Radix UI
-- **Accessible**: Built with accessibility in mind
+### 🗂️ Organization
+- **Notebooks**: Create and manage multiple notebooks
+- **Notes**: Rich text notes within notebooks
+- **Breadcrumb Navigation**: Easy navigation between levels
+- **Search**: Find notes and notebooks quickly
+- **Card-based UI**: Clean, modern interface
+
+### 🔐 Authentication & Security
+- **Email/Password**: Traditional authentication
+- **Email Verification**: Required for account activation
+- **Password Reset**: Secure password recovery
+- **Session Management**: Secure session handling
+- **Protected Routes**: Middleware-based route protection
 
 ## 🛠️ Tech Stack
 
-### Frontend Framework
-- **[Next.js 15.4.5](https://nextjs.org)** - React framework with App Router
-- **[React 19.1.0](https://react.dev)** - UI library
-- **[TypeScript 5.x](https://www.typescriptlang.org)** - Type-safe JavaScript
+### Frontend
+- **Next.js 15** - React framework with App Router
+- **React 19** - Latest React with concurrent features
+- **TypeScript** - Type-safe development
+- **Tailwind CSS** - Utility-first styling
+- **TipTap** - Rich text editor framework
+- **Framer Motion** - Smooth animations
+- **Radix UI** - Accessible component primitives
+- **Lucide React** - Beautiful icons
 
-### Styling & UI
-- **[Tailwind CSS 4.x](https://tailwindcss.com)** - Utility-first CSS framework
-- **[Radix UI](https://www.radix-ui.com)** - Headless UI components
-- **[Lucide React](https://lucide.dev)** - Beautiful icons
-- **[Class Variance Authority](https://cva.style/docs)** - Component variant management
+### Backend & Database
+- **Better Auth** - Modern authentication library
+- **Drizzle ORM** - Type-safe database operations
+- **PostgreSQL** - Robust relational database
+- **Neon Database** - Serverless PostgreSQL hosting
+- **Server Actions** - Next.js server-side functions
 
-### Animations & Effects
-- **[Framer Motion](https://www.framer.com/motion/)** - Production-ready motion library
-- **[TW Animate CSS](https://www.npmjs.com/package/tw-animate-css)** - Tailwind animation utilities
-
-### Theme Management
-- **[Next Themes](https://github.com/pacocoursey/next-themes)** - Theme switching
+### Email & Communication
+- **Resend** - Email delivery service
+- **React Email** - Email template components
 
 ### Development Tools
-- **[ESLint](https://eslint.org)** - Code linting
-- **[Turbopack](https://turbo.build/pack)** - Fast bundler for development
+- **ESLint** - Code linting
+- **TypeScript** - Static type checking
+- **Drizzle Kit** - Database migrations
+- **PNPM** - Fast package manager
 
-## 📦 Libraries & Dependencies
+## 📁 Project Structure
 
-### Production Dependencies
-```json
-{
-  "@radix-ui/react-dropdown-menu": "^2.1.15",
-  "@radix-ui/react-slot": "^1.2.3",
-  "class-variance-authority": "^0.7.1",
-  "clsx": "^2.1.1",
-  "lucide-react": "^0.536.0",
-  "motion": "^12.23.12",
-  "next": "15.4.5",
-  "next-themes": "^0.4.6",
-  "react": "19.1.0",
-  "react-dom": "19.1.0",
-  "tailwind-merge": "^3.3.1"
-}
 ```
-
-### Development Dependencies
-```json
-{
-  "@eslint/eslintrc": "^3",
-  "@tailwindcss/postcss": "^4",
-  "@types/node": "^20",
-  "@types/react": "^19",
-  "@types/react-dom": "^19",
-  "eslint": "^9",
-  "eslint-config-next": "15.4.5",
-  "tailwindcss": "^4",
-  "tw-animate-css": "^1.3.6",
-  "typescript": "^5"
-}
+notes-app/
+├── app/                          # Next.js App Router
+│   ├── api/auth/[...all]/       # Authentication API routes
+│   ├── dashboard/               # Protected dashboard area
+│   │   ├── layout.tsx           # Dashboard layout with sidebar
+│   │   ├── page.tsx             # Dashboard home
+│   │   └── notebook/            # Notebook pages
+│   │       └── [notebookId]/    # Dynamic notebook routes
+│   │           ├── page.tsx     # Notebook details
+│   │           └── note/        # Note pages
+│   │               └── [noteId]/ # Dynamic note routes
+│   │                   └── page.tsx # Note editor
+│   ├── login/                   # Authentication pages
+│   ├── signup/
+│   ├── forgot-password/
+│   ├── reset-password/
+│   └── verify/                   # Email verification
+├── components/                   # Reusable UI components
+│   ├── ui/                      # Base UI components (Radix UI)
+│   ├── forms/                   # Form components
+│   ├── emails/                  # Email templates
+│   ├── rich-text-editor.tsx     # Main editor component
+│   ├── note-card.tsx            # Note display component
+│   ├── notebook-card.tsx        # Notebook display component
+│   └── page-wrapper.tsx         # Layout wrapper
+├── db/                          # Database configuration
+│   ├── db.ts                    # Database connection
+│   └── schema.ts                # Database schema
+├── lib/                         # Utility libraries
+│   ├── auth.ts                  # Authentication configuration
+│   ├── auth-client.ts           # Client-side auth
+│   └── utils.ts                 # Utility functions
+├── server/                      # Server-side functions
+│   ├── notes.ts                 # Note operations
+│   ├── notebook.ts              # Notebook operations
+│   └── user.ts                  # User operations
+├── hooks/                       # Custom React hooks
+├── middleware.ts                # Next.js middleware
+└── public/                      # Static assets
 ```
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js 18.x or higher
-- npm, yarn, pnpm, or bun package manager
+- Node.js 18+ 
+- PNPM (recommended) or NPM
+- PostgreSQL database (or Neon account)
 
 ### Installation
 
@@ -102,99 +127,116 @@ A modern, developer-focused note-taking application built with Next.js. NoteFlow
 
 2. **Install dependencies**
    ```bash
-   npm install
-   # or
-   yarn install
-   # or
    pnpm install
    # or
-   bun install
+   npm install
    ```
 
-3. **Run the development server**
+3. **Environment Setup**
+   Create a `.env.local` file:
+   ```env
+   # Database
+   DATABASE_URL="your-postgresql-connection-string"
+   
+   # Authentication
+   BETTER_AUTH_SECRET="your-secret-key"
+   BETTER_AUTH_URL="http://localhost:3000"
+   
+   # Email (Resend)
+   RESEND_API_KEY="your-resend-api-key"
+   ```
+
+4. **Database Setup**
    ```bash
-   npm run dev
-   # or
-   yarn dev
-   # or
-   pnpm dev
-   # or
-   bun dev
+   # Generate migration files
+   pnpm drizzle-kit generate
+   
+   # Run migrations
+   pnpm drizzle-kit push
    ```
 
-4. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000) to see the application.
+5. **Start Development Server**
+   ```bash
+   pnpm dev
+   ```
+
+6. **Open in Browser**
+   Navigate to `http://localhost:3000`
+
+## 🎨 Key Components
+
+### Rich Text Editor (`components/rich-text-editor.tsx`)
+- **TipTap Integration**: Full-featured rich text editing
+- **Auto-save**: Content saves automatically on changes
+- **Manual Save**: Plus button for explicit saving
+- **Formatting Tools**: Bold, italic, headings, lists, alignment
+- **Real-time State**: Live editor state management
+
+### Authentication System
+- **Better Auth**: Modern authentication with email verification
+- **Protected Routes**: Middleware-based route protection
+- **Session Management**: Secure session handling
+- **Password Reset**: Email-based recovery
+
+### Database Schema
+- **Users**: User accounts with email verification
+- **Sessions**: Secure session management
+- **Notebooks**: User-owned notebook containers
+- **Notes**: Rich text content with JSON storage
+- **Relations**: Proper foreign key relationships
+
+## 🔧 Development
 
 ### Available Scripts
-
-- `npm run dev` - Start development server with Turbopack
-- `npm run build` - Build the application for production
-- `npm run start` - Start the production server
-- `npm run lint` - Run ESLint for code quality checks
-
-## 📁 Project Structure
-
-```
-notes-app/
-├── app/                    # Next.js App Router
-│   ├── layout.tsx         # Root layout
-│   └── page.tsx           # Home page
-├── components/            # React components
-│   ├── ui/               # Reusable UI components
-│   │   ├── animated-group.tsx
-│   │   ├── button.tsx
-│   │   ├── card.tsx
-│   │   ├── dropdown-menu.tsx
-│   │   └── text-effect.tsx
-│   ├── call-to-action.tsx
-│   ├── features.tsx
-│   ├── footer.tsx
-│   ├── header.tsx
-│   ├── hero-section.tsx
-│   ├── logo.tsx
-│   ├── mode-toggle.tsx
-│   └── theme-provider.tsx
-├── lib/                   # Utility functions
-│   └── utils.ts
-├── public/               # Static assets
-└── package.json
+```bash
+pnpm dev          # Start development server
+pnpm build        # Build for production
+pnpm start        # Start production server
+pnpm lint         # Run ESLint
 ```
 
-## 🎨 Customization
+### Database Operations
+```bash
+pnpm drizzle-kit generate    # Generate migrations
+pnpm drizzle-kit push        # Push schema changes
+pnpm drizzle-kit studio      # Open Drizzle Studio
+```
 
-The application is built with customization in mind:
+## 🚀 Deployment
 
-- **Themes**: Toggle between light and dark modes
-- **Components**: Modular component system built with Radix UI
-- **Styling**: Easily customizable with Tailwind CSS
-- **Animations**: Smooth animations powered by Framer Motion
+### Vercel (Recommended)
+1. Connect your GitHub repository to Vercel
+2. Set environment variables in Vercel dashboard
+3. Deploy automatically on push to main
 
-## 🔮 Future Features
-
-- **Note Creation & Editing**: Full CRUD operations for notes
-- **Markdown Editor**: Rich markdown editing experience
-- **Search Functionality**: Fast, fuzzy search across all notes
-- **Tags & Categories**: Organize notes with tags and categories
-- **Keyboard Shortcuts**: Extensive keyboard shortcuts for power users
-- **Export/Import**: Support for various file formats
-- **Collaboration**: Share and collaborate on notes
-- **Plugin System**: Extensible plugin architecture
+### Environment Variables for Production
+```env
+DATABASE_URL="your-production-database-url"
+BETTER_AUTH_SECRET="your-production-secret"
+BETTER_AUTH_URL="https://your-domain.com"
+RESEND_API_KEY="your-resend-api-key"
+```
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## 📄 License
+## 📝 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🔗 Links
+## 🙏 Acknowledgments
 
-- **Next.js Documentation**: [https://nextjs.org/docs](https://nextjs.org/docs)
-- **React Documentation**: [https://react.dev](https://react.dev)
-- **Tailwind CSS**: [https://tailwindcss.com](https://tailwindcss.com)
-- **Radix UI**: [https://www.radix-ui.com](https://www.radix-ui.com)
+- **TipTap** - Amazing rich text editor framework
+- **Better Auth** - Modern authentication solution
+- **Radix UI** - Accessible component primitives
+- **Next.js Team** - Excellent React framework
+- **Tailwind CSS** - Utility-first CSS framework
 
 ---
 
-**Built with ❤️ for developers by developers**
+**Built with ❤️ using Next.js, TypeScript, and modern web technologies.**
