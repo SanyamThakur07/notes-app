@@ -93,8 +93,9 @@ export const HeroHeader = () => {
               <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
                 <div className="flex items-center">
                   <Link
-                    href="https://github.com/TheOrcDev/noteforge"
+                    href="https://github.com/SanyamThakur07/notes-app"
                     target="_blank"
+                    className="ml-1"
                   >
                     <Button
                       size="sm"
