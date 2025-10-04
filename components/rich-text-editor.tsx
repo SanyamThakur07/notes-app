@@ -38,13 +38,23 @@ import {
   Subscript,
 } from "lucide-react";
 import { updateNote } from "@/server/notes";
+import { toast } from "sonner";
+import { useState } from "react";
 
 interface RichTextEditorProps {
   content?: JSONContent[];
   noteId?: string;
+  title?: string;
+  notebookId?: string;
 }
 
-const RichTextEditor = ({ content, noteId }: RichTextEditorProps) => {
+const RichTextEditor = ({
+  content,
+  noteId,
+  title,
+  notebookId,
+}: RichTextEditorProps) => {
+  const [isSaving, setIsSaving] = useState(false);
   const editor = useEditor({
     extensions: [StarterKit, Document, Paragraph, Text],
     immediatelyRender: false,
@@ -52,9 +62,9 @@ const RichTextEditor = ({ content, noteId }: RichTextEditorProps) => {
     editable: true,
     injectCSS: false,
     onUpdate: ({ editor }) => {
-      if (noteId) {
+      if (noteId && title && notebookId) {
         const content = editor.getJSON();
-        updateNote(noteId, { content, title: "", notebookId: "" });
+        updateNote(noteId, { content, title, notebookId });
       }
     },
     content: content ?? {
@@ -159,6 +169,30 @@ const RichTextEditor = ({ content, noteId }: RichTextEditorProps) => {
     if (editorState?.isHeading2) return "H2";
     if (editorState?.isHeading3) return "H3";
     return "H1";
+  };
+
+  const handleSave = async () => {
+    if (!noteId || !editor || !title || !notebookId) return;
+
+    try {
+      setIsSaving(true);
+      const content = editor.getJSON();
+      const response = await updateNote(noteId, {
+        content,
+        title,
+        notebookId,
+      });
+
+      if (response.success) {
+        toast.success("Note saved successfully");
+      } else {
+        toast.error("Failed to save note");
+      }
+    } catch (error) {
+      toast.error("Failed to save the note");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -382,14 +416,16 @@ const RichTextEditor = ({ content, noteId }: RichTextEditorProps) => {
         {/* Spacer */}
         <div className="flex-1" />
 
-        {/* Add Button */}
+        {/* Save Button */}
         <Button
           variant="ghost"
           size="sm"
+          onClick={handleSave}
+          disabled={isSaving}
           className="h-8 px-2 text-muted-foreground hover:text-foreground hover:bg-accent gap-1"
         >
           <Plus className="h-4 w-4" />
-          Add
+          {isSaving ? "Saving..." : "Save"}
         </Button>
       </div>
 

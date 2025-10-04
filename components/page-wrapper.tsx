@@ -35,14 +35,14 @@ const PageWrapper = ({ breadcrumbs, children }: PageWrapperProps) => {
           <SidebarTrigger />
           <Breadcrumb>
             <BreadcrumbList>
-              {breadcrumbs.map((breadcrumb) => (
+              {breadcrumbs.map((breadcrumb, index) => (
                 <React.Fragment key={breadcrumb.label}>
                   <BreadcrumbItem>
                     <BreadcrumbLink href={breadcrumb.href}>
                       {breadcrumb.label}
                     </BreadcrumbLink>
                   </BreadcrumbItem>
-                  <BreadcrumbSeparator />
+                  {index !== breadcrumbs.length - 1 && <BreadcrumbSeparator />}
                 </React.Fragment>
               ))}
             </BreadcrumbList>

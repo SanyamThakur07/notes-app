@@ -71,7 +71,7 @@ const NotebookCard = ({ notebook }: NotebookCardProps) => {
           </Button>
         </Link>
         <AlertDialog open={open} onOpenChange={setOpen}>
-          <AlertDialogTrigger>
+          <AlertDialogTrigger asChild>
             <Button disabled={deleting}>
               <Trash2 />
             </Button>
